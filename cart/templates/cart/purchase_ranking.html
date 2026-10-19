@@ -1,0 +1,76 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="% url 'admin:index' %">Home</a>
+    $rsaquo; User purchase rankings
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <p>
+        Users are ranked by the number of movies they have purchased across all orders.
+    </p>
+
+    <form method="get" action="{% url 'admin_purchase_ranking' %}">
+        <div style="margin-bottom: 16px;">
+            {{ form.limit.label_tag}}
+            {{ form.limit}}
+            <p class="help">{{ form.limit.help_text }}</p>
+
+            {{ form.limit.errors}}
+
+            <input type="submit" value="Update list">
+            <a href="{% url 'admin_purchase_ranking' %}"
+                style="margin-left: 12px;">
+                Show all users
+            </a>
+        </div>
+    </form>
+
+    {% if not form.errors %}
+        <p>
+            Showing {{ ranked_users|length }} of {{ total_users }} users.
+            {% if limit %}
+                Requested list size: {{ limit }}.
+            {% endif %}
+        </p>
+
+        <div class="module">
+            <table style="width: 100%;">
+                <caption>
+                    User purchase rankings
+                </caption>
+
+                <thead>
+                    <tr>
+                        <th scope="col">Position</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Movies purchased</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for ranked_user in ranked_users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ ranked_user.username }}</td>
+                            <td>{{ ranked_user.purchase_count }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">No users found.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p class="help">
+            Users with equal purchase totals are ordered by username.
+        </p>
+  {% endif %}
+
+</div>
+{% endblock %}
