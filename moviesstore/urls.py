@@ -20,7 +20,12 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from cart.admin_report import purchase_ranking
+
 urlpatterns = [
+    path('admin/purchase-rankings/',
+         purchase_ranking,
+         name="admin_purchase_ranking",),
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('movies/', include('movies.urls')),
