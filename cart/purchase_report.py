@@ -7,7 +7,7 @@ def get_purchase_rankings():
         get_user_model().objects
         .annotate(
             purchase_count=Coalesce(
-                Sum("order_item_quantity"),
+                Sum("order__item__quantity"),
                 0,
             )
         )

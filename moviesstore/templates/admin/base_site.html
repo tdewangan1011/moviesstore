@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}">Movies Store Admin</a>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+    {{ block.super }}
+    {% if user.is_active and user.is_staff %}
+        <a href="{% url 'admin_purchase_ranking' %}"
+           style="margin: 0 20px; color: var(--header-link-color);">
+            Purchase rankings
+        </a>
+    {% endif %}
+{% endblock %}

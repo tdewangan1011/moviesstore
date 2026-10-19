@@ -23,7 +23,7 @@ class PurchaseRankingForm(forms.Form):
 
 def purchase_ranking(request):
     form = PurchaseRankingForm(request.GET)
-    ranked_users = get_purchase_rankings
+    ranked_users = get_purchase_rankings()
     total_users = ranked_users.count()
     limit = None
     if form.is_valid():
@@ -44,7 +44,7 @@ def purchase_ranking(request):
 
     return TemplateResponse(
         request,
-        "admin/purchase_ranking.html"
+        "cart/purchase_ranking.html",
         context,
     )
     
