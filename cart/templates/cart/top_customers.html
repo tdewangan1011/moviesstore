@@ -1,0 +1,34 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<div class="p-3">
+ <div class="container">
+ <div class="row mt-3">
+ <div class="col mx-auto mb-3">
+
+     {% if template_data.top_customers %}
+         <table>
+             <thead>
+             <tr>
+                 <th>Username</th>
+                 <th>Movies Purchased</th>
+             </tr>
+             </thead>
+         <tbody>
+            {% for top_customer in template_data.top_customers %}
+                <tr>
+                    <td>{{ top_customer.username }}</td>
+                    <td>{{ top_customer.num_movies_purchased }}</td>
+                </tr>
+            {% endfor %}
+         </tbody>
+         </table>
+     {% else %}
+         <p>No movies have been purchased.</p>
+     {% endif %}
+
+ </div>
+ </div>
+ </div>
+</div>
+{% endblock content %}
