@@ -21,11 +21,15 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from cart.admin_report import purchase_ranking
+from movies.admin_views import top_commenter
 
 urlpatterns = [
     path('admin/purchase-rankings/',
          purchase_ranking,
          name="admin_purchase_ranking",),
+    path('admin/top-commenter/',
+         top_commenter,
+         name="admin_top_commenter"),
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('movies/', include('movies.urls')),

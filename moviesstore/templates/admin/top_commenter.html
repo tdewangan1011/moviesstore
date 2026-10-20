@@ -1,0 +1,89 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; User Engagement
+    &rsaquo; Top Commenter
+</div>
+{% endblock %}
+
+{% block content %}
+
+<h1>Top Commenter Report</h1>
+
+<p>
+    This page displays which user has posted
+    the most movie comments.
+</p>
+
+{% if leader %}
+
+    {% if leaders|length == 1 %}
+
+        <h2>Most Active User</h2>
+
+        <p>
+            Username:
+            <strong>{{ leader.user__username }}</strong>
+        </p>
+
+        <p>
+            Total Comments:
+            <strong>{{ leader.comment_count }}</strong>
+        </p>
+
+    {% else %}
+
+        <h2>Tie for Most Comments</h2>
+
+        <p>
+            {% for user in leaders %}
+                <strong>{{ user.user__username }}</strong>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+
+        <p>
+            Each user has posted
+            <strong>{{ leader.comment_count }}</strong>
+            comments.
+        </p>
+
+    {% endif %}
+
+    <h2>All User Comment Counts</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Total Comments</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in rankings %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.user__username }}</td>
+                <td>{{ user.comment_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+
+    <p>No comments have been posted yet.</p>
+
+{% endif %}
+
+<p style="margin-top: 20px;">
+    <a href="{% url 'admin:index' %}">
+        Back to Admin Dashboard
+    </a>
+</p>
+
+{% endblock %}
