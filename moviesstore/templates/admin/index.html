@@ -4,6 +4,13 @@
     <div class="module">
         <h2>Customer Engagement</h2>
         <p><a href="{% url 'cart.top_customers' %}">Top Customers</a></p>
+
+        <a href="{% url 'admin_top_commenter' %}"
+               target="_blank"
+               rel="noopener">
+                View Top Commenter Report
+            </a>
+        </p>
     </div>
 
     {{ block.super }}
