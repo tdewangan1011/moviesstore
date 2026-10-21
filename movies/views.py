@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Movie, Review
+from .models import Movie, Review, Rating 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
 # Create your views here.
 
@@ -19,10 +20,19 @@ def index(request):
 def show(request, id):
     movie = Movie.objects.get(id=id)
     reviews = Review.objects.filter(movie=movie)
+    ratings = Rating.objects.filter(movie=movie)
+
     template_data = {}
     template_data['title'] = movie.name
     template_data['movie'] = movie
     template_data['reviews'] = reviews
+    template_data['average_rating'] = ratings.aggregate(Avg('stars'))['stars__avg']
+    template_data['rating_count'] = ratings.count()
+    template_data['user_rating'] = None
+    if request.user.is_authenticated:
+        user_rating = ratings.filter(user=request.user).first()
+        if user_rating:
+            template_data['user_rating'] = user_rating.stars
     return render(request, 'movies/show.html', {'template_data': template_data})
 
 @login_required
@@ -71,4 +81,19 @@ def report_review(request, id, review_id):
         return redirect('movies.show', id=id)
 
     review.delete()
+    return redirect('movies.show', id=id)
+
+@login_required
+def rate_movie(request, id):
+    movie = get_object_or_404(Movie, id=id)
+    if request.method == 'POST':
+        try:
+            stars = int(request.POST.get('stars', 0))
+        except ValueError:
+            stars = 0
+        if 1 <= stars <= 5:
+            Rating.objects.update_or_create(
+                movie=movie, user=request.user,
+                defaults={ 'stars' : stars}
+            )
     return redirect('movies.show', id=id)
