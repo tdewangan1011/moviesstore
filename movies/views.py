@@ -27,7 +27,7 @@ def show(request, id):
     template_data['movie'] = movie
     template_data['reviews'] = reviews
     template_data['average_rating'] = ratings.aggregate(Avg('stars'))['stars__avg']
-    template_data['rating_count'] = ratings.count
+    template_data['rating_count'] = ratings.count()
     template_data['user_rating'] = None
     if request.user.is_authenticated:
         user_rating = ratings.filter(user=request.user).first()

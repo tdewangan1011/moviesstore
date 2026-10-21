@@ -38,7 +38,7 @@ class Rating(models.Model):
    constraints = [
       models.UniqueConstraint(fields=['movie', 'user'], name='unique_rating_per_user_movie')
    ]
-   def __str__(self):
+  def __str__(self):
       return str(self.id) + ' - ' + self.movie.name + ' - ' + str(self.stars
       )
    
