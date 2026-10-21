@@ -48,3 +48,10 @@
   width: fit-content;
   max-height: 400px;
 }
+
+.star-rating { display: inline-flex; flex-direction: row-reverse; }
+.star-rating input {display: none; }
+.star-rating label {font-size: 1.6rem; color: #ccc; cursor: pointer; padding: 0 2px; }
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label { color: #f5b301; }
