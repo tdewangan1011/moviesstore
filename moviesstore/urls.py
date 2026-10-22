@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from cart.admin_report import purchase_ranking
-from movies.admin_views import movie_statistics, top_commenter
+from movies.admin_views import top_commenter
 
 urlpatterns = [
     path('admin/purchase-rankings/',
@@ -30,9 +30,6 @@ urlpatterns = [
     path('admin/top-commenter/',
          top_commenter,
          name="admin_top_commenter"),
-    path('admin/movie-statistics/',
-         movie_statistics,
-         name="admin_movie_statistics"),
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('movies/', include('movies.urls')),

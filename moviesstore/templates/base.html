@@ -30,9 +30,6 @@
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>
             {% if user.is_authenticated %}
             <a class="nav-link" href="{% url 'accounts.orders' %}">Orders</a>
-            {% if user.is_superuser %}
-            <a class="nav-link" href="{% url 'admin_movie_statistics' %}">Movie Statistics</a>
-            {% endif %}
             <a class="nav-link" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
             {% else %}
             <a class="nav-link" href="{% url 'accounts.login' %}">Login</a>
