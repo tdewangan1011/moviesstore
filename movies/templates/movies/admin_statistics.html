@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+  <div class="container">
+    <h1>Movie Statistics</h1>
+    <hr />
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h2>Top Selling Movie</h2>
+            {% for movie in template_data.best_selling_movies %}
+            {% if movie.image %}
+            <img src="{{ movie.image.url }}" class="card-img-top rounded img-card-200" alt="{{ movie.name }}">
+            {% endif %}
+            <h4 class="card-title">{{ movie.num_sold }} Units Sold</h4>
+            <p>
+              <a href="{% url 'movies.show' id=movie.id %}" class="btn bg-dark text-white">{{ movie.name }}</a>
+            </p>
+            {% empty %}
+            <p>No best selling movie found.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h2>Most Reviewed Movie</h2>
+            {% for movie in template_data.most_reviewed_movies %}
+            {% if movie.image %}
+            <img src="{{ movie.image.url }}" class="card-img-top rounded img-card-200" alt="{{ movie.name }}">
+            {% endif %}
+            <h4 class="card-title">{{ movie.num_reviews }} Reviews Posted</h4>
+            <p>
+              <a href="{% url 'movies.show' id=movie.id %}" class="btn bg-dark text-white">{{ movie.name }}</a>
+            </p>
+            {% empty %}
+            <p>No most reviewed movie found.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
